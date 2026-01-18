@@ -162,28 +162,43 @@ Deployment Notes
 -- Public domain explicitly enabled
 
 Frontend
+
 -- Deployed on Netlify
+
 -- Base directory set to frontend
+
 -- No build step required (static site)
 
 Known Limitations
+
 -- Authentication is minimal and not production-grade.
+
 -- Rate limiting is in-memory and resets on service restart.
+
 -- UI is intentionally basic and unstyled.
 
 These tradeoffs were made to keep the project focused on core backend and deployment fundamentals.
 
 Resume & Links
+
 -- GitHub: https://github.com/Gyokuken
+
 -- LinkedIn: https://www.linkedin.com/in/amitanshu-lal-611248244/
+
 -- Portfolio: https://portfolio-website-lime-two-16.vercel.app/
 
 Summary
+
 This project demonstrates the ability to:
+
 -- Design clean REST APIs
+
 -- Model relational data
+
 -- Implement filtering and search
+
 -- Deploy and expose services publicly
+
 -- Integrate a frontend with a live backend
 
 The scope is intentionally small, readable, and focused on correctness rather than complexity.
