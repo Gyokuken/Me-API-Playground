@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile Playground</title>
+</head>
+<body>
+
+<h1>My Profile</h1>
+<div id="profile"></div>
+
+
+<h2>Search Projects</h2>
+
+<input id="q" placeholder="search..." />
+<button onclick="search()">Search</button>
+
+<br><br>
+
+<select id="skill">
+  <option value="">-- filter by skill --</option>
+  <option>Python</option>
+  <option>Deep Learning</option>
+  <option>Computer Vision</option>
+  <option>Next.js</option>
+  <option>React</option>
+</select>
+
+<button onclick="filterBySkill()">Filter</button>
+
+
+<ul id="projects"></ul>
+
+<script>
+const API = "http://127.0.0.1:8000";
+
+fetch(API + "/profile")
+  .then(r => r.json())
+  .then(p => {
+    document.getElementById("profile").innerHTML = `
+      <h2>${p.name}</h2>
+      <p><strong>Education:</strong> ${p.education}</p>
+      <p>
+        <a href="${p.github}" target="_blank">GitHub</a> |
+        <a href="${p.linkedin}" target="_blank">LinkedIn</a> |
+        <a href="${p.portfolio}" target="_blank">Portfolio</a>
+      </p>
+    `;
+  });
+
+
+function search() {
+  const q = document.getElementById("q").value;
+  fetch(API + "/search?q=" + q)
+    .then(r => r.json())
+    .then(render);
+}
+
+function filterBySkill() {
+  const skill = document.getElementById("skill").value;
+  if (!skill) {
+    alert("Please select a skill");
+    return;
+  }
+
+  fetch(API + "/projects?skill=" + encodeURIComponent(skill))
+    .then(r => r.json())
+    .then(render);
+}
+
+
+
+function render(data) {
+  const ul = document.getElementById("projects");
+  ul.innerHTML = "";
+
+  if (!data.length) {
+    ul.innerHTML = "<li>No results found</li>";
+    return;
+  }
+
+  data.forEach(p => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <strong>${p.title}</strong><br>
+      <span>${p.description}</span><br>
+      <a href="${p.link}" target="_blank">View project</a>
+    `;
+
+    ul.appendChild(li);
+  });
+}
+
+fetch(API + "/projects")
+  .then(r => r.json())
+  .then(render);
+
+
+</script>
+
+</body>
+</html>
